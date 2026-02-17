@@ -6,7 +6,7 @@ OBJS = $(SRCS:.cpp=.o)
 $(TARGET): $(OBJS)
 	g++ $(OBJS) -o $(TARGET)
 
-%.o: %.cpp task1.h
+%.o: %.cpp datatypes.h
 	g++ $(CXXFLAGS) -c $< -o $@
 
 clean:

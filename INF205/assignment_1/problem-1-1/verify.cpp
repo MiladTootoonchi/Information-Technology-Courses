@@ -1,5 +1,5 @@
 #include <iostream>
-#include "task1.h"
+#include "datatypes.h"
 
 int verify() {
     int arr[2];
