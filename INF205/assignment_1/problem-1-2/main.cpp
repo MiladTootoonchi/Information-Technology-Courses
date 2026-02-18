@@ -35,3 +35,25 @@ int main() {
 
     return 0;
 }
+
+
+/*
+Forklaring:
+
+Vi lagrer tallet -12 i ulike heltallstyper (short, int, long, long long)
+og ser på hvordan det faktisk ligger i minnet, byte for byte.
+
+Datamaskiner lagrer negative tall med noe som kalles to-komplement.
+Kort fortalt betyr det at -12 får en binærrepresentasjon som ender på 0xf4 i laveste byte.
+
+Siden tallet er negativt, fylles resten av bytene med 0xff. Dette kalles sign extension – maskinen "fyller på" med 1-ere
+for å bevare fortegnet når typen er større. Derfor vil vi typisk se:
+short - 0xf4 0xff
+int - 0xf4 0xff 0xff 0xff
+long long - 0xf4 fulgt av flere 0xff
+
+At 0xf4 kommer først skyldes at de fleste maskiner i dag er little-endian. 
+Det betyr at den minst signifikante byten lagres først i minnet.
+Vi bruker unsigned char* fordi unsigned char alltid er nøyaktig én byte, og dermed kan vi gå gjennom minnet byte for byte.
+
+ */
