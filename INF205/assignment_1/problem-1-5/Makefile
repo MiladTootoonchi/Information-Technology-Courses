@@ -3,3 +3,6 @@ program: main.cpp
 
 clean:
 	rm -f program
+
+zip: clean
+	zip $(folder) Makefile *.cpp *.h $(data)
