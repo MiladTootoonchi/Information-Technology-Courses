@@ -58,17 +58,3 @@ void Graph::insert_edge(const std::string& node_a_label,
     nodeA->incident_edges.push_back(new_edge);
     nodeB->incident_edges.push_back(new_edge);
 }
-
-void Graph::print() const {
-    std::cout << "Graph contents:\n";
-
-    for (Node* n : nodes) {
-        std::cout << "Node " << n->label << " is connected by edges: ";
-
-        for (Edge* e : n->incident_edges) {
-            std::cout << e->label << " ";
-        }
-
-        std::cout << "\n";
-    }
-}

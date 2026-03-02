@@ -42,8 +42,6 @@ public:
     void insert_edge(const std::string& node_a_label,
                      const std::string& edge_label,
                      const std::string& node_b_label);
-
-    void print() const;
 };
 
 #endif
