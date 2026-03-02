@@ -98,3 +98,46 @@ void MatrixGraph::print() const {
         }
     }
 }
+
+void MatrixGraph::remove_node(const std::string& label) {
+
+    int index = find_node_index(label);
+    if (index == -1) return;
+
+    bool isolated = true;
+
+    for (size_t i = 0; i < nodes.size(); ++i) {
+        if (!matrix[index][i].empty() ||
+            !matrix[i][index].empty()) {
+            isolated = false;
+            break;
+        }
+    }
+
+    if (!isolated) return;
+
+    // remove row
+    matrix.erase(matrix.begin() + index);
+
+    // remove column
+    for (auto& row : matrix) {
+        row.erase(row.begin() + index);
+    }
+
+    nodes.erase(nodes.begin() + index);
+}
+
+void MatrixGraph::disconnect(const std::string& a,
+                             const std::string& b) {
+
+    int i = find_node_index(a);
+    int j = find_node_index(b);
+
+    if (i == -1 || j == -1) return;
+
+    matrix[i][j].clear();
+
+    // remove isolated nodes
+    remove_node(a);
+    remove_node(b);
+}

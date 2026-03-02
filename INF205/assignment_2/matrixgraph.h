@@ -24,6 +24,11 @@ public:
     void print() const override;
     void load_from_file(const std::string& filename) override;
     void save_to_file(const std::string& filename) const override;
+
+    void disconnect(const std::string& node_a_label,
+                const std::string& node_b_label) override;
+
+    void remove_node(const std::string& node_label) override;
 };
 
 #endif

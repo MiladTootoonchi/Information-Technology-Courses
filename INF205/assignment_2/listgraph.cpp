@@ -1,6 +1,7 @@
 #include "ListGraph.h"
 #include <fstream>
 #include <iostream>
+#include <algorithm>
 
 Node::Node(const std::string& l)
     : label(l) {}
@@ -101,4 +102,55 @@ void ListGraph::print() const {
 
         std::cout << "\n";
     }
+}
+
+void ListGraph::remove_node(const std::string& label) {
+
+    Node* node = find_node(label);
+    if (!node) return;
+
+    if (!node->incident_edges.empty()) return; // only remove isolated
+
+    nodes.erase(
+        std::remove(nodes.begin(), nodes.end(), node),
+        nodes.end());
+
+    delete node;
+}
+
+void ListGraph::disconnect(const std::string& a,
+                           const std::string& b) {
+
+    Node* nodeA = find_node(a);
+    Node* nodeB = find_node(b);
+
+    if (!nodeA || !nodeB) return;
+
+    for (auto it = edges.begin(); it != edges.end();) {
+        Edge* e = *it;
+
+        if (e->from == nodeA && e->to == nodeB) {
+
+            // remove from incident lists
+            nodeA->incident_edges.erase(
+                std::remove(nodeA->incident_edges.begin(),
+                            nodeA->incident_edges.end(), e),
+                nodeA->incident_edges.end());
+
+            nodeB->incident_edges.erase(
+                std::remove(nodeB->incident_edges.begin(),
+                            nodeB->incident_edges.end(), e),
+                nodeB->incident_edges.end());
+
+            delete e;
+            it = edges.erase(it);
+        }
+        else {
+            ++it;
+        }
+    }
+
+    // remove isolated nodes
+    remove_node(a);
+    remove_node(b);
 }
