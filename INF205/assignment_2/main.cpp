@@ -1,12 +1,15 @@
-#include "Graph.h"
+#include "ListGraph.h"
+#include "MatrixGraph.h"
 
 int main() {
-    Graph g;
 
-    g.insert_edge("A", "e1", "B");
-    g.insert_edge("A", "e2", "C");
-    g.insert_edge("B", "e3", "C");
-    g.insert_edge("C", "e4", "C");
+    Graph* g = new MatrixGraph();
+
+    g->load_from_file("input.txt");
+    g->print();
+    g->save_to_file("output.txt");
+
+    delete g;
 
     return 0;
 }

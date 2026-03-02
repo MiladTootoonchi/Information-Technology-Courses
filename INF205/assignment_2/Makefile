@@ -1,8 +1,8 @@
 run: main
 	./main
 
-main: main.cpp Graph.cpp Graph.h
-	g++ -std=c++17 main.cpp Graph.cpp -o main
+main: main.cpp ListGraph.cpp MatrixGraph.cpp
+	g++ -std=c++17 main.cpp ListGraph.cpp MatrixGraph.cpp -o main
 
 clean:
 	rm -f main
