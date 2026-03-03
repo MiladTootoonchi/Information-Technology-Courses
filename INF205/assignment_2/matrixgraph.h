@@ -29,6 +29,12 @@ public:
                 const std::string& node_b_label) override;
 
     void remove_node(const std::string& node_label) override;
+
+    MatrixGraph(const MatrixGraph& other);
+    MatrixGraph& operator=(const MatrixGraph& other);
+
+    MatrixGraph(MatrixGraph&& other) noexcept;
+    MatrixGraph& operator=(MatrixGraph&& other) noexcept;
 };
 
 #endif

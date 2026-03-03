@@ -2,6 +2,7 @@
 #include <fstream>
 #include <iostream>
 #include <algorithm>
+#include <unordered_map>
 
 Node::Node(const std::string& l)
     : label(l) {}
@@ -13,12 +14,9 @@ ListGraph::ListGraph() {
 }
 
 ListGraph::~ListGraph() {
-    // delete edges first
     for (Edge* e : edges) {
         delete e;
     }
-
-    // then delete nodes
     for (Node* n : nodes) {
         delete n;
     }
@@ -109,7 +107,7 @@ void ListGraph::remove_node(const std::string& label) {
     Node* node = find_node(label);
     if (!node) return;
 
-    if (!node->incident_edges.empty()) return; // only remove isolated
+    if (!node->incident_edges.empty()) return;
 
     nodes.erase(
         std::remove(nodes.begin(), nodes.end(), node),
@@ -131,7 +129,6 @@ void ListGraph::disconnect(const std::string& a,
 
         if (e->from == nodeA && e->to == nodeB) {
 
-            // remove from incident lists
             nodeA->incident_edges.erase(
                 std::remove(nodeA->incident_edges.begin(),
                             nodeA->incident_edges.end(), e),
@@ -150,7 +147,87 @@ void ListGraph::disconnect(const std::string& a,
         }
     }
 
-    // remove isolated nodes
     remove_node(a);
     remove_node(b);
+}
+
+
+ListGraph::ListGraph(const ListGraph& other) {
+    std::unordered_map<Node*, Node*> map;
+
+    for (Node* oldNode : other.nodes) {
+        Node* newNode = new Node(oldNode->label);
+        nodes.push_back(newNode);
+        map[oldNode] = newNode;
+    }
+
+    for (Edge* oldEdge : other.edges) {
+        Node* newFrom = map[oldEdge->from];
+        Node* newTo   = map[oldEdge->to];
+
+        Edge* newEdge = new Edge(oldEdge->label, newFrom, newTo);
+        edges.push_back(newEdge);
+
+        newFrom->incident_edges.push_back(newEdge);
+        newTo->incident_edges.push_back(newEdge);
+    }
+}
+
+ListGraph& ListGraph::operator=(const ListGraph& other) {
+    if (this == &other)
+        return *this;
+
+    for (Edge* e : edges)
+        delete e;
+    for (Node* n : nodes)
+        delete n;
+
+    edges.clear();
+    nodes.clear();
+
+    std::unordered_map<Node*, Node*> map;
+
+    for (Node* oldNode : other.nodes) {
+        Node* newNode = new Node(oldNode->label);
+        nodes.push_back(newNode);
+        map[oldNode] = newNode;
+    }
+
+    for (Edge* oldEdge : other.edges) {
+        Node* newFrom = map[oldEdge->from];
+        Node* newTo   = map[oldEdge->to];
+
+        Edge* newEdge = new Edge(oldEdge->label, newFrom, newTo);
+        edges.push_back(newEdge);
+
+        newFrom->incident_edges.push_back(newEdge);
+        newTo->incident_edges.push_back(newEdge);
+    }
+
+    return *this;
+}
+
+ListGraph::ListGraph(ListGraph&& other) noexcept
+    : nodes(std::move(other.nodes)),
+      edges(std::move(other.edges)) {
+    other.nodes.clear();
+    other.edges.clear();
+}
+
+ListGraph& ListGraph::operator=(ListGraph&& other) noexcept {
+    if (this == &other)
+        return *this;
+
+    for (Edge* e : edges)
+        delete e;
+    for (Node* n : nodes)
+        delete n;
+
+    nodes = std::move(other.nodes);
+    edges = std::move(other.edges);
+
+    other.nodes.clear();
+    other.edges.clear();
+
+    return *this;
 }

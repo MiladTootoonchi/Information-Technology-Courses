@@ -1,3 +1,0 @@
-A AB B.
-B BC C.
-D DE E.

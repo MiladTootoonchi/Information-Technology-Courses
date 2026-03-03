@@ -36,8 +36,11 @@ public:
     ListGraph();
     ~ListGraph();
 
-    ListGraph(const ListGraph&) = delete;
-    ListGraph& operator=(const ListGraph&) = delete;
+    ListGraph(const ListGraph& other);
+    ListGraph& operator=(const ListGraph& other);
+
+    ListGraph(ListGraph&& other) noexcept;
+    ListGraph& operator=(ListGraph&& other) noexcept;
 
     void insert_edge(const std::string& node_a_label,
                      const std::string& edge_label,

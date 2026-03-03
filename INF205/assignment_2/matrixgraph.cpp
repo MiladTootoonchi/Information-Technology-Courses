@@ -141,3 +141,26 @@ void MatrixGraph::disconnect(const std::string& a,
     remove_node(a);
     remove_node(b);
 }
+
+MatrixGraph::MatrixGraph(const MatrixGraph& other)
+    : nodes(other.nodes), matrix(other.matrix) {}
+
+MatrixGraph& MatrixGraph::operator=(const MatrixGraph& other) {
+    if (this != &other) {
+        nodes = other.nodes;
+        matrix = other.matrix;
+    }
+    return *this;
+}
+
+MatrixGraph::MatrixGraph(MatrixGraph&& other) noexcept
+    : nodes(std::move(other.nodes)),
+      matrix(std::move(other.matrix)) {}
+
+MatrixGraph& MatrixGraph::operator=(MatrixGraph&& other) noexcept {
+    if (this != &other) {
+        nodes = std::move(other.nodes);
+        matrix = std::move(other.matrix);
+    }
+    return *this;
+}

@@ -5,4 +5,4 @@ main: main.cpp ListGraph.cpp MatrixGraph.cpp
 	g++ -std=c++17 main.cpp ListGraph.cpp MatrixGraph.cpp -o main
 
 clean:
-	rm -f main
+	rm -f main output_list.txt output_matrix.txt
