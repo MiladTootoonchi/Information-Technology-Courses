@@ -19,7 +19,7 @@ int main() {
     ListGraph g2(g);
     g2.print();
 
-    std::cout << "\nTesting copy assignment\n";
+    std::cout << "\nTesting copy\n";
     ListGraph g3;
     g3 = g;
     g3.print();
@@ -51,7 +51,7 @@ int main() {
     MatrixGraph m2(m);
     m2.print();
 
-    std::cout << "\nTesting copy assignment\n";
+    std::cout << "\nTesting copy\n";
     MatrixGraph m3;
     m3 = m;
     m3.print();
