@@ -8,7 +8,7 @@ MatrixGraph::MatrixGraph() {
 MatrixGraph::~MatrixGraph() {
 }
 
-int MatrixGraph::find_node_index(const std::string& label) const {
+int MatrixGraph::find_node_index(const std::string& label) const{
     for (size_t i = 0; i < nodes.size(); ++i) {
         if (nodes[i] == label) {
             return i;
@@ -17,7 +17,7 @@ int MatrixGraph::find_node_index(const std::string& label) const {
     return -1;
 }
 
-int MatrixGraph::get_or_create_node_index(const std::string& label) {
+int MatrixGraph::get_or_create_node_index(const std::string& label){
     int index = find_node_index(label);
 
     if (index != -1) {
@@ -40,8 +40,8 @@ int MatrixGraph::get_or_create_node_index(const std::string& label) {
 }
 
 void MatrixGraph::insert_edge(const std::string& node_a_label,
-                              const std::string& edge_label,
-                              const std::string& node_b_label) {
+                            const std::string& edge_label,
+                            const std::string& node_b_label){
 
     int i = get_or_create_node_index(node_a_label);
     int j = get_or_create_node_index(node_b_label);
@@ -49,7 +49,7 @@ void MatrixGraph::insert_edge(const std::string& node_a_label,
     matrix[i][j].push_back(edge_label);
 }
 
-void MatrixGraph::load_from_file(const std::string& filename) {
+void MatrixGraph::load_from_file(const std::string& filename){
     std::ifstream file(filename);
 
     if (!file) {
@@ -64,7 +64,7 @@ void MatrixGraph::load_from_file(const std::string& filename) {
     }
 }
 
-void MatrixGraph::save_to_file(const std::string& filename) const {
+void MatrixGraph::save_to_file(const std::string& filename) const{
     std::ofstream file(filename);
 
     if (!file) {
@@ -74,7 +74,7 @@ void MatrixGraph::save_to_file(const std::string& filename) const {
 
     for (size_t i = 0; i < nodes.size(); ++i) {
         for (size_t j = 0; j < nodes.size(); ++j) {
-            for (const std::string& edgeLabel : matrix[i][j]) {
+            for (const std::string& edgeLabel : matrix[i][j]){
                 file << nodes[i] << " "
                      << edgeLabel << " "
                      << nodes[j] << "\n";
@@ -83,14 +83,14 @@ void MatrixGraph::save_to_file(const std::string& filename) const {
     }
 }
 
-void MatrixGraph::print() const {
+void MatrixGraph::print() const{
     std::cout << "Graph (adjacency matrix):\n";
 
     for (size_t i = 0; i < nodes.size(); ++i) {
-        for (size_t j = 0; j < nodes.size(); ++j) {
+        for (size_t j = 0; j < nodes.size(); ++j){
             if (!matrix[i][j].empty()) {
                 std::cout << nodes[i] << " -> " << nodes[j] << ": ";
-                for (const std::string& label : matrix[i][j]) {
+                for (const std::string& label : matrix[i][j]){
                     std::cout << label << " ";
                 }
                 std::cout << "\n";
@@ -99,7 +99,7 @@ void MatrixGraph::print() const {
     }
 }
 
-void MatrixGraph::remove_node(const std::string& label) {
+void MatrixGraph::remove_node(const std::string& label){
 
     int index = find_node_index(label);
     if (index == -1) return;
@@ -107,8 +107,7 @@ void MatrixGraph::remove_node(const std::string& label) {
     bool isolated = true;
 
     for (size_t i = 0; i < nodes.size(); ++i) {
-        if (!matrix[index][i].empty() ||
-            !matrix[i][index].empty()) {
+        if (!matrix[index][i].empty() || !matrix[i][index].empty()){
             isolated = false;
             break;
         }
@@ -127,8 +126,7 @@ void MatrixGraph::remove_node(const std::string& label) {
     nodes.erase(nodes.begin() + index);
 }
 
-void MatrixGraph::disconnect(const std::string& a,
-                             const std::string& b) {
+void MatrixGraph::disconnect(const std::string& a, const std::string& b){
 
     int i = find_node_index(a);
     int j = find_node_index(b);
@@ -142,10 +140,9 @@ void MatrixGraph::disconnect(const std::string& a,
     remove_node(b);
 }
 
-MatrixGraph::MatrixGraph(const MatrixGraph& other)
-    : nodes(other.nodes), matrix(other.matrix) {}
+MatrixGraph::MatrixGraph(const MatrixGraph& other): nodes(other.nodes), matrix(other.matrix){}
 
-MatrixGraph& MatrixGraph::operator=(const MatrixGraph& other) {
+MatrixGraph& MatrixGraph::operator=(const MatrixGraph& other){
     if (this != &other) {
         nodes = other.nodes;
         matrix = other.matrix;
@@ -153,11 +150,9 @@ MatrixGraph& MatrixGraph::operator=(const MatrixGraph& other) {
     return *this;
 }
 
-MatrixGraph::MatrixGraph(MatrixGraph&& other) noexcept
-    : nodes(std::move(other.nodes)),
-      matrix(std::move(other.matrix)) {}
+MatrixGraph::MatrixGraph(MatrixGraph&& other) noexcept: nodes(std::move(other.nodes)), matrix(std::move(other.matrix)){}
 
-MatrixGraph& MatrixGraph::operator=(MatrixGraph&& other) noexcept {
+MatrixGraph& MatrixGraph::operator=(MatrixGraph&& other) noexcept{
     if (this != &other) {
         nodes = std::move(other.nodes);
         matrix = std::move(other.matrix);

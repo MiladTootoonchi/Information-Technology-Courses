@@ -7,7 +7,7 @@
 
 class Edge;
 
-class Node {
+class Node{
 public:
     std::string label;
     std::vector<Edge*> incident_edges;
@@ -15,7 +15,7 @@ public:
     Node(const std::string& l);
 };
 
-class Edge {
+class Edge{
 public:
     std::string label;
     Node* from;
@@ -24,7 +24,7 @@ public:
     Edge(const std::string& l, Node* a, Node* b);
 };
 
-class ListGraph : public Graph {
+class ListGraph : public Graph{
 private:
     std::vector<Node*> nodes;
     std::vector<Edge*> edges;

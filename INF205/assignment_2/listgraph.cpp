@@ -4,16 +4,13 @@
 #include <algorithm>
 #include <unordered_map>
 
-Node::Node(const std::string& l)
-    : label(l) {}
+Node::Node(const std::string& l): label(l){}
 
-Edge::Edge(const std::string& l, Node* a, Node* b)
-    : label(l), from(a), to(b) {}
+Edge::Edge(const std::string& l, Node* a, Node* b): label(l), from(a), to(b){}
 
-ListGraph::ListGraph() {
-}
+ListGraph::ListGraph(){}
 
-ListGraph::~ListGraph() {
+ListGraph::~ListGraph(){
     for (Edge* e : edges) {
         delete e;
     }
@@ -22,7 +19,7 @@ ListGraph::~ListGraph() {
     }
 }
 
-Node* ListGraph::find_node(const std::string& label) const {
+Node* ListGraph::find_node(const std::string& label) const{
     for (Node* n : nodes) {
         if (n->label == label) {
             return n;
@@ -31,7 +28,7 @@ Node* ListGraph::find_node(const std::string& label) const {
     return nullptr;
 }
 
-Node* ListGraph::get_or_create_node(const std::string& label) {
+Node* ListGraph::get_or_create_node(const std::string& label){
     Node* n = find_node(label);
 
     if (n != nullptr) {
@@ -43,9 +40,7 @@ Node* ListGraph::get_or_create_node(const std::string& label) {
     return newNode;
 }
 
-void ListGraph::insert_edge(const std::string& node_a_label,
-                            const std::string& edge_label,
-                            const std::string& node_b_label) {
+void ListGraph::insert_edge(const std::string& node_a_label, const std::string& edge_label, const std::string& node_b_label){
 
     Node* nodeA = get_or_create_node(node_a_label);
     Node* nodeB = get_or_create_node(node_b_label);
@@ -58,7 +53,7 @@ void ListGraph::insert_edge(const std::string& node_a_label,
     nodeB->incident_edges.push_back(e);
 }
 
-void ListGraph::load_from_file(const std::string& filename) {
+void ListGraph::load_from_file(const std::string& filename){
     std::ifstream file(filename);
 
     if (!file) {
@@ -73,7 +68,7 @@ void ListGraph::load_from_file(const std::string& filename) {
     }
 }
 
-void ListGraph::save_to_file(const std::string& filename) const {
+void ListGraph::save_to_file(const std::string& filename) const{
     std::ofstream file(filename);
 
     if (!file) {
@@ -88,7 +83,7 @@ void ListGraph::save_to_file(const std::string& filename) const {
     }
 }
 
-void ListGraph::print() const {
+void ListGraph::print() const{
     std::cout << "Graph:\n";
 
     for (Node* n : nodes) {
@@ -102,7 +97,7 @@ void ListGraph::print() const {
     }
 }
 
-void ListGraph::remove_node(const std::string& label) {
+void ListGraph::remove_node(const std::string& label){
 
     Node* node = find_node(label);
     if (!node) return;
@@ -116,8 +111,7 @@ void ListGraph::remove_node(const std::string& label) {
     delete node;
 }
 
-void ListGraph::disconnect(const std::string& a,
-                           const std::string& b) {
+void ListGraph::disconnect(const std::string& a, const std::string& b){
 
     Node* nodeA = find_node(a);
     Node* nodeB = find_node(b);
@@ -152,7 +146,7 @@ void ListGraph::disconnect(const std::string& a,
 }
 
 
-ListGraph::ListGraph(const ListGraph& other) {
+ListGraph::ListGraph(const ListGraph& other){
     std::unordered_map<Node*, Node*> map;
 
     for (Node* oldNode : other.nodes) {
@@ -173,7 +167,7 @@ ListGraph::ListGraph(const ListGraph& other) {
     }
 }
 
-ListGraph& ListGraph::operator=(const ListGraph& other) {
+ListGraph& ListGraph::operator=(const ListGraph& other){
     if (this == &other)
         return *this;
 
@@ -207,14 +201,12 @@ ListGraph& ListGraph::operator=(const ListGraph& other) {
     return *this;
 }
 
-ListGraph::ListGraph(ListGraph&& other) noexcept
-    : nodes(std::move(other.nodes)),
-      edges(std::move(other.edges)) {
+ListGraph::ListGraph(ListGraph&& other) noexcept: nodes(std::move(other.nodes)), edges(std::move(other.edges)){
     other.nodes.clear();
     other.edges.clear();
 }
 
-ListGraph& ListGraph::operator=(ListGraph&& other) noexcept {
+ListGraph& ListGraph::operator=(ListGraph&& other) noexcept{
     if (this == &other)
         return *this;
 
