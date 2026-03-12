@@ -1,0 +1,5 @@
+A e1 B
+A e2 B
+B e3 C
+C e4 A
+D e5 E
