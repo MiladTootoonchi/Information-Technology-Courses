@@ -253,3 +253,21 @@ std::vector<std::string> ListGraph::get_neighbors(const std::string& nodeLabel) 
 
     return result;
 }
+
+std::vector<std::pair<std::string,std::string>>
+ListGraph::get_labeled_neighbors(const std::string& nodeLabel) const{
+
+    std::vector<std::pair<std::string,std::string>> result;
+
+    Node* n = find_node(nodeLabel);
+    if (!n) return result;
+
+    for (Edge* e : n->incident_edges) {
+
+        if (e->from->label == nodeLabel) {
+            result.push_back({e->to->label, e->label});
+        }
+    }
+
+    return result;
+}

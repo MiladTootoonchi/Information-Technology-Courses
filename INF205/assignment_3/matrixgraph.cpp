@@ -185,3 +185,22 @@ std::vector<std::string> MatrixGraph::get_neighbors(const std::string& node) con
 
     return result;
 }
+
+std::vector<std::pair<std::string,std::string>>
+MatrixGraph::get_labeled_neighbors(const std::string& node) const{
+
+    std::vector<std::pair<std::string,std::string>> result;
+
+    int i = find_node_index(node);
+
+    if (i == -1) return result;
+
+    for (size_t j = 0; j < nodes.size(); j++){
+
+        for (const std::string& label : matrix[i][j]){
+            result.push_back({nodes[j], label});
+        }
+    }
+
+    return result;
+}

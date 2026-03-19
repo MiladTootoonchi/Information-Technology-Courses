@@ -1,42 +1,54 @@
+#include <iostream>
 #include "ListGraph.h"
 #include "MatrixGraph.h"
-#include <iostream>
 #include "tarjan.h"
+#include "diamond.h"
 
-int main(int argc, char* argv[]){
+int main(int argc, char* argv[]) {
 
-    if (argc < 2){
-        std::cout << "Usage: program inputfile [-v]\n";
+    if (argc < 3) {
+        std::cout << "Usage: ./main input.txt [scc|diamond] [-v]\n";
         return 1;
     }
 
     std::string filename = argv[1];
+    std::string mode = argv[2];
+
     bool verbose = false;
 
-    if (argc > 2){
-        std::string flag = argv[2];
-        if (flag == "-v") {
+    if (argc > 3) {
+        if (std::string(argv[3]) == "-v") {
             verbose = true;
         }
     }
 
     ListGraph g;
-
     g.load_from_file(filename);
 
-    TarjanSCC t;
+    if (mode == "scc") {
 
-    auto comps = t.run(g);
+        TarjanSCC t;
+        auto comps = t.run(g);
 
-    if (verbose){
-        for (auto& c : comps) {
-            std::cout << "Component: ";
-            for (auto& n : c) {
-                std::cout << n << " ";
+        if (verbose) {
+            for (auto& c : comps) {
+                std::cout << "Component: ";
+                for (auto& n : c) {
+                    std::cout << n << " ";
+                }
+                std::cout << "\n";
             }
-
-            std::cout << "\n";
         }
+
+    } else if (mode == "diamond") {
+
+        DiamondQuery dq;
+        dq.load_query("query.txt");
+        dq.run(g, verbose);
+
+    } else {
+        std::cout << "Unknown mode\n";
     }
 
+    return 0;
 }

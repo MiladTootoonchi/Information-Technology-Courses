@@ -58,6 +58,9 @@ public:
 
     std::vector<std::string> get_nodes() const override;
     std::vector<std::string> get_neighbors(const std::string& node) const override;
+
+    std::vector<std::pair<std::string,std::string>>
+    get_labeled_neighbors(const std::string& node) const override;
 };
 
 #endif

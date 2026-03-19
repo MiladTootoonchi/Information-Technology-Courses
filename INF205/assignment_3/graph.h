@@ -25,6 +25,9 @@ public:
 
     virtual std::vector<std::string> get_nodes() const = 0;
     virtual std::vector<std::string> get_neighbors(const std::string& node) const = 0;
+
+    virtual std::vector<std::pair<std::string,std::string>>
+    get_labeled_neighbors(const std::string& node) const = 0;
 };
 
 #endif
