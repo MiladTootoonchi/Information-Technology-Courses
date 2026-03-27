@@ -3,6 +3,7 @@
 #include "MatrixGraph.h"
 #include "tarjan.h"
 #include "diamond.h"
+#include <chrono>
 
 int main(int argc, char* argv[]) {
 
@@ -27,8 +28,13 @@ int main(int argc, char* argv[]) {
 
     if (mode == "scc") {
 
+        auto start = std::chrono::high_resolution_clock::now();
         TarjanSCC t;
         auto comps = t.run(g);
+        auto end = std::chrono::high_resolution_clock::now();
+
+        std::chrono::duration<double> diff = end - start;
+        std::cout << "Time: " << diff.count() << " seconds\n";
 
         if (verbose) {
             for (auto& c : comps) {
@@ -42,9 +48,14 @@ int main(int argc, char* argv[]) {
 
     } else if (mode == "diamond") {
 
+        auto start = std::chrono::high_resolution_clock::now();
         DiamondQuery dq;
         dq.load_query("query.txt");
         dq.run(g, verbose);
+        auto end = std::chrono::high_resolution_clock::now();
+
+        std::chrono::duration<double> diff = end - start;
+        std::cout << "Time: " << diff.count() << " seconds\n";
 
     } else {
         std::cout << "Unknown mode\n";

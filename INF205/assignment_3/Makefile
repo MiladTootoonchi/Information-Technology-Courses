@@ -14,4 +14,4 @@ pro32: main
 	./main input.txt diamond -v
 
 clean:
-	rm -f main
+	rm -f main gen_graph gen_scc

@@ -56,6 +56,15 @@ void TarjanSCC::strongconnect(Graph& g, const std::string& v){
 std::vector<std::vector<std::string>> TarjanSCC::run(Graph& g) {
 
     components.clear();
+    index.clear();
+    lowlink.clear();
+    onStack.clear();
+
+    while (!S.empty()) {
+        S.pop();
+    }
+
+    currentIndex = 0;
 
     std::vector<std::string> nodes = g.get_nodes();
 
