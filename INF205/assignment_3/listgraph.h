@@ -42,9 +42,7 @@ public:
     ListGraph(ListGraph&& other) noexcept;
     ListGraph& operator=(ListGraph&& other) noexcept;
 
-    void insert_edge(const std::string& node_a_label,
-                     const std::string& edge_label,
-                     const std::string& node_b_label) override;
+    void insert_edge(const std::string& node_a_label, const std::string& edge_label, const std::string& node_b_label) override;
 
     void print() const override;
 
